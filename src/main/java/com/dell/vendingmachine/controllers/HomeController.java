@@ -1,12 +1,11 @@
 package com.dell.vendingmachine.controllers;
 
-import com.dell.vendingmachine.dto.VendingCredit;
+import com.dell.vendingmachine.dto.VendingCreditResponse;
 import com.dell.vendingmachine.model.CreditOption;
 import com.dell.vendingmachine.model.Product;
 import com.dell.vendingmachine.model.VendingMachine;
 import com.dell.vendingmachine.repository.VendingMachineRepository;
 import com.dell.vendingmachine.service.VendingMachineService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +34,8 @@ public class HomeController {
     }
 
     @GetMapping(value="/{id}/credit")
-    public ResponseEntity<List<CreditOption>> GetCreditOptions(@PathVariable Long id) {
-        return new ResponseEntity<List<CreditOption>>(vendingMachineService.GetCreditAmount(id), HttpStatus.OK);
+    public ResponseEntity<VendingCreditResponse> GetCreditOptions(@PathVariable Long id) {
+        return new ResponseEntity<VendingCreditResponse>(vendingMachineService.GetCreditAmount(id), HttpStatus.OK);
     }
 
     @PostMapping(value="/{id}/add-credit")

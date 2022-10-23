@@ -1,23 +1,19 @@
 package com.dell.vendingmachine.service.impl;
 
-import com.dell.vendingmachine.dto.VendingCredit;
+import com.dell.vendingmachine.dto.VendingCreditResponse;
 import com.dell.vendingmachine.model.CreditOption;
 import com.dell.vendingmachine.model.Product;
 import com.dell.vendingmachine.model.VendingMachine;
 import com.dell.vendingmachine.repository.VendingMachineRepository;
 import com.dell.vendingmachine.service.VendingMachineService;
-import lombok.val;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -94,7 +90,7 @@ public class VendingMachineImpl implements VendingMachineService {
     }
 
     @Override
-    public List<CreditOption> GetCreditAmount(long id) {
+    public VendingCreditResponse GetCreditAmount(long id) {
         VendingMachine vm = vendingMachineRepository.getById(id);
 
         Double creditAmount = vm.getCredit();
@@ -104,7 +100,11 @@ public class VendingMachineImpl implements VendingMachineService {
         // Order the credit options by double value
         creditOptions.sort(Comparator.comparing(CreditOption::getValue).reversed());
 
-        return this.getCreditAmountByCreditOption(creditAmount, creditOptions, credit);
+        VendingCreditResponse vcr = new VendingCreditResponse();
+        vcr.TotalCreditAmount = creditAmount.floatValue();
+        vcr.CreditCoins = this.getCreditAmountByCreditOption(creditAmount, creditOptions, credit);
+
+        return vcr;
     }
 
     // this method will return the credit as a list of credit options
@@ -113,6 +113,7 @@ public class VendingMachineImpl implements VendingMachineService {
 
         // round
         creditAmount = Math.round(creditAmount * 100.0) / 100.0;
+
         if (creditAmount > 0) {
             for (CreditOption co : creditOptions) {
                 if (creditAmount >= co.getValue()) {
@@ -124,7 +125,6 @@ public class VendingMachineImpl implements VendingMachineService {
         }
 
         return credit;
-
     }
 
 }
