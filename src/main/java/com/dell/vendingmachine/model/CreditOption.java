@@ -12,7 +12,6 @@ class CreditOption  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @Column(columnDefinition = "serial", name = "productId")
     private Long creditOptionId;
 
     private  String label;

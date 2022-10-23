@@ -1,8 +1,6 @@
 package com.dell.vendingmachine.model;
 
-import org.hibernate.annotations.Type;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;

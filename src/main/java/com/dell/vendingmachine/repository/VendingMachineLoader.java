@@ -1,6 +1,5 @@
 package com.dell.vendingmachine.repository;
 
-import com.dell.vendingmachine.dto.VendingCredit;
 import com.dell.vendingmachine.model.CreditOption;
 import com.dell.vendingmachine.model.Product;
 import com.dell.vendingmachine.model.VendingMachine;
@@ -66,7 +65,6 @@ public class VendingMachineLoader implements CommandLineRunner {
             vendingMachineRepository.save(vendingMachine2);
 
         }
-        System.out.println(vendingMachineRepository.count());
     }
 
 }

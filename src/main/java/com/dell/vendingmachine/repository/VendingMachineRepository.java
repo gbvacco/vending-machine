@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VendingMachineRepository  extends JpaRepository<VendingMachine, Long> {
 
-//    VendingMachine findById(long id);
-
 }
