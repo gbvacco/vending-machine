@@ -25,12 +25,12 @@ public class VendingMachineLoader implements CommandLineRunner {
 
     private void configureCreditOptions(VendingMachine vendingMachine) {
 
-        CreditOption penny = CreditOption.builder().label("penny").value(0.01).build();
-        CreditOption nickel = CreditOption.builder().label("nickel").value(0.05).build();
-        CreditOption dime = CreditOption.builder().label("dime").value(0.10).build();
-        CreditOption quarter = CreditOption.builder().label("quarter").value(0.25).build();
-        CreditOption fiftyCent = CreditOption.builder().label("fiftyCent").value(0.50).build();
-        CreditOption dollar = CreditOption.builder().label("dollar").value(1.00).build();
+        CreditOption penny = CreditOption.builder().label("penny").value(0.01f).build();
+        CreditOption nickel = CreditOption.builder().label("nickel").value(0.05f).build();
+        CreditOption dime = CreditOption.builder().label("dime").value(0.10f).build();
+        CreditOption quarter = CreditOption.builder().label("quarter").value(0.25f).build();
+        CreditOption fiftyCent = CreditOption.builder().label("fiftyCent").value(0.50f).build();
+        CreditOption dollar = CreditOption.builder().label("dollar").value(1.00f).build();
 
         vendingMachine.setCreditOptions(Arrays.asList(penny, nickel, dime, quarter, fiftyCent, dollar));
 

@@ -28,12 +28,12 @@ class VendingMachineApplicationTest {
 				CreditOption.builder()
 						.creditOptionId(1L)
 						.label("Dollar")
-						.value(1.0)
+						.value(1.0f)
 						.build(),
 				CreditOption.builder()
 						.creditOptionId(2L)
 						.label("Two Dollars")
-						.value(2.0)
+						.value(2.0f)
 						.build()
 		);
 

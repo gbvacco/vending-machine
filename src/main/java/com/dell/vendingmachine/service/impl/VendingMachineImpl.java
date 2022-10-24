@@ -7,6 +7,7 @@ import com.dell.vendingmachine.model.VendingMachine;
 import com.dell.vendingmachine.repository.VendingMachineRepository;
 import com.dell.vendingmachine.service.VendingMachineService;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +32,7 @@ public class VendingMachineImpl implements VendingMachineService {
         VendingMachine v = vendingMachineRepository.getById(id);
         List<CreditOption> vco = v.getCreditOptions();
 
-        Double addedCreditAmount = 0.0;
+        Float addedCreditAmount = 0.0f;
         for (CreditOption c : credit) {
 
             Optional<CreditOption> found = vco.stream().filter(x -> x.getCreditOptionId().equals(c.getCreditOptionId()))
@@ -48,7 +49,8 @@ public class VendingMachineImpl implements VendingMachineService {
             addedCreditAmount += co.getValue();
         }
 
-        v.setCredit(v.getCredit() + addedCreditAmount);
+        DecimalFormat df = new DecimalFormat("0.00");
+        v.setCredit(Double.parseDouble(df.format(v.getCredit() + addedCreditAmount)));
 
         return vendingMachineRepository.save(v);
     }
@@ -101,14 +103,15 @@ public class VendingMachineImpl implements VendingMachineService {
         creditOptions.sort(Comparator.comparing(CreditOption::getValue).reversed());
 
         VendingCreditResponse vcr = new VendingCreditResponse();
+
         vcr.TotalCreditAmount = creditAmount.floatValue();
-        vcr.CreditCoins = this.getCreditAmountByCreditOption(creditAmount, creditOptions, credit);
+        vcr.CreditCoins = this.GetCreditAmountByCreditOption(creditAmount, creditOptions, credit);
 
         return vcr;
     }
 
     // this method will return the credit as a list of credit options
-    public List<CreditOption> getCreditAmountByCreditOption(Double creditAmount, List<CreditOption> creditOptions,
+    public List<CreditOption> GetCreditAmountByCreditOption(Double creditAmount, List<CreditOption> creditOptions,
             List<CreditOption> credit) {
 
         // round
@@ -119,7 +122,7 @@ public class VendingMachineImpl implements VendingMachineService {
                 if (creditAmount >= co.getValue()) {
                     credit.add(co);
                     creditAmount -= co.getValue();
-                    return this.getCreditAmountByCreditOption(creditAmount, creditOptions, credit);
+                    return this.GetCreditAmountByCreditOption(creditAmount, creditOptions, credit);
                 }
             }
         }
